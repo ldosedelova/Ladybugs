@@ -130,25 +130,6 @@ public class Testy_Terka {
         Assertions.assertEquals("http://czechitas-datestovani-hackathon.cz/en/login?back=my-account",urlAutentizace);
     }
 
-
- //   @Test
-//    public void MyPersonalInformation(){
-//        prohlizec.navigate().to(URL_APLIKACE);
-//        prihlaseniZHlavniStrany("qacustomer@gmail.com", "Asdf1234");
-//
-//        WebElement osobniInformace = prohlizec.findElement(By.xpath("//a[@title = 'information']"));
-//        osobniInformace.click();
-//
-//        WebElement title = prohlizec.findElement(By.xpath("//label[text(), Social title] "));
-//        title.isDisplayed();
-//        WebElement jmenoInput = prohlizec.findElement(By.id("firstname"));
-//        jmenoInput.isDisplayed();
-//        jmenoInput.isEnabled();
-//        WebElement prijmeniInput = prohlizec.findElement(By.id("lastname"));
-//        prijmeniInput.isDisplayed();
-//        prijmeniInput.isEnabled();
-//    }
-
     @Test
     public void mohuNajitPolozkuMenuHome(){
         prohlizec.navigate().to(URL_APLIKACE);
