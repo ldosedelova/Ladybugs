@@ -29,7 +29,6 @@ public class Testy_Terka {
 
     @Test
     public void naStranceMehoUctuByMeloBytZobrazeno() {
-        //BDHL-17
         prohlizec.navigate().to(URL_APLIKACE);
         WebElement prihlasit = prohlizec.findElement(By.xpath("/html/body/div[1]/div[1]/header/div[3]/div/div/div[7]/ul/li/a"));
         prihlasit.click();
@@ -48,9 +47,73 @@ public class Testy_Terka {
         Assertions.assertEquals("MY PERSONAL INFORMATION", links.get(4).getText());
     }
 
+    @Test
+    public void naAutentizacniStranceMohuVytvoritUcet(){
+        prohlizec.navigate().to(URL_APLIKACE+"login?back=my-account");
+        WebElement polickoEmailRegistrace = prohlizec.findElement(By.id("email_create"));
+        Assertions.assertTrue(polickoEmailRegistrace.isDisplayed());
+        Assertions.assertTrue(polickoEmailRegistrace.isEnabled());
+        WebElement tlacitkoVytvorUcet = prohlizec.findElement(By.id("SubmitCreate"));
+        Assertions.assertTrue(tlacitkoVytvorUcet.isDisplayed());
+        Assertions.assertTrue(tlacitkoVytvorUcet.isEnabled());
+    }
+
+    @Test
+    public void naAutentizacniStranceSeMohuPrihlasit(){
+        prohlizec.navigate().to(URL_APLIKACE+"login?back=my-account");
+        WebElement polickoEmailPrihlaseni = prohlizec.findElement(By.id("email"));
+        Assertions.assertTrue(polickoEmailPrihlaseni.isDisplayed());
+        Assertions.assertTrue(polickoEmailPrihlaseni.isEnabled());
+        WebElement polickoHeslo = prohlizec.findElement(By.id("passwd"));
+        Assertions.assertTrue(polickoHeslo.isDisplayed());
+        Assertions.assertTrue(polickoHeslo.isEnabled());
+        WebElement tlacitkoPrihlasit = prohlizec.findElement(By.id("SubmitLogin"));
+        Assertions.assertTrue(tlacitkoPrihlasit.isDisplayed());
+        Assertions.assertTrue(tlacitkoPrihlasit.isEnabled());
+    }
+
+    @Test
+    public void naAutentizacniStranceMohuZresetovatHeslo(){
+        prohlizec.navigate().to(URL_APLIKACE+"login?back=my-account");
+        WebElement zapomenuteHesloOdkaz = prohlizec.findElement(By.linkText("Forgot your password?"));
+        Assertions.assertTrue(zapomenuteHesloOdkaz.isDisplayed());
+    }
+
+    @Test
+    public void naHlavniStraneSeMohuPrihlasit(){
+        prohlizec.navigate().to(URL_APLIKACE);
+        prihlaseniZHlavniStrany("qacustomer@gmail.com", "Asdf1234");
+        Assertions.assertNotNull(prohlizec.findElement(By.xpath("//h1[contains(text(), 'My account')]")));
+    }
+
+    @Test
+    public void mohuSeOdhlasit(){
+        prohlizec.navigate().to(URL_APLIKACE);
+        prihlaseniZHlavniStrany("qacustomer@gmail.com", "Asdf1234");
+
+        WebElement uzivatelUcet = prohlizec.findElement(By.id("user_info_acc"));
+        uzivatelUcet.click();
+        WebElement odhlasitLink = prohlizec.findElement(By.linkText("Logout"));
+        odhlasitLink.click();
+        WebElement prihlaseni = prohlizec.findElement(By.xpath("//a[@title = 'Log in to your customer account']"));
+        Assertions.assertNotNull(prihlaseni);
+    }
+
+
     @AfterEach
     public void tearDown() {
         prohlizec.close();
     }
 
+
+    public void prihlaseniZHlavniStrany(String email, String heslo) {
+        WebElement linkPrihlaseni = prohlizec.findElement(By.xpath("//a[contains(@class, 'user_login')]"));
+        linkPrihlaseni.click();
+        WebElement polickoEmailPrihlaseni = prohlizec.findElement(By.id("email"));
+        polickoEmailPrihlaseni.sendKeys(email);
+        WebElement polickoHeslo = prohlizec.findElement(By.id("passwd"));
+        polickoHeslo.sendKeys(heslo);
+        WebElement tlacitkoPrihlasit = prohlizec.findElement(By.id("SubmitLogin"));
+        tlacitkoPrihlasit.click();
+    }
 }
