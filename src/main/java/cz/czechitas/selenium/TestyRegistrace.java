@@ -26,7 +26,7 @@ public class TestyRegistrace {
     }
 
     @Test
-    public void uzivatelMusiBytPrevedenNaregistracniStrankuPoZadaniAdresy() {
+    public void novyUzivatelseMusiZaregistrovat() {
         prohlizec.navigate().to(URL_APLIKACE);
         WebElement tlacitkoNaPrihlaseni = prohlizec.findElement(By.xpath("//span[text()='Sign in']"));
         tlacitkoNaPrihlaseni.click();
